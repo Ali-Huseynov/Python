@@ -1,0 +1,35 @@
+{% extends 'ip_checker/base.html' %}
+
+
+{% block content %}
+
+    <center>
+        <div class="form-group">
+            <form method="POST"  >
+                {% csrf_token %}
+                <legend><h3>Enter IP address</h3></legend>
+                <input  name="ip_name" >
+                <button class="btn btn-outline-info" type="submit">Search</button>
+            </form>
+        </div>
+        
+
+        {% if error %}
+            <h3 class="text-danger" > {{ error }} </h3>
+        {% elif addresses %}
+            <h3 class="text-muted" > IP Ranges That Mathces </h3>
+            {%  for ip_from,tip_to in addresses  %}
+                <p class = "text-info"> {{ ip_from }} - {{ tip_to }} </p>
+            {% endfor %}
+        {% elif not_found %}
+            <h3 class="text-danger" > {{ not_found }} </h3>
+            <a class="text-primary" href="{% url 'add_range' %}" >Do you want add new range?</a>
+
+        {% endif %}
+
+        </div>
+    </center>
+
+{% endblock %}
+
+

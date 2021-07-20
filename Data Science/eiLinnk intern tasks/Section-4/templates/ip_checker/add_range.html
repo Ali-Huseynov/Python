@@ -1,0 +1,34 @@
+{% extends 'ip_checker/base.html' %}
+
+
+{% block content %}
+
+<center>
+    <div class="form-group">
+        <form method="POST"  >
+            {% csrf_token %}
+            <legend><h3>Enter IP range</h3></legend>
+            <input  name="ip_from" placeholder="From" >
+            <input  name="ip_to" placeholder="To" >
+            <button class="btn btn-outline-info" type="submit">Add</button>
+        </form>
+    </div>
+    
+
+    {% if error %}
+        <h3 class="text-danger" > {{ error }} </h3>
+    {% elif success %}
+        <h3 class="text-success" > {{ success }} </h3>
+    {% elif exist %}
+        <h3 class="text-danger" > {{ exist.msg }} </h3>
+        {%  for ip_from,tip_to in exist.data  %}
+            <p class = "text-info"> {{ ip_from }} - {{ tip_to }} </p>
+        {% endfor %}
+    
+    {% endif %}
+
+    </div>
+</center>
+
+{% endblock %}
+
